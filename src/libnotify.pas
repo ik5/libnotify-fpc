@@ -51,34 +51,38 @@ type
   PNotifyNotificationPrivate = P_NotifyNotificationPrivate;
   NotifyNotificationPrivate  = _NotifyNotificationPrivate;
 
+  P_NotifyNotification = ^_NotifyNotification;
   _NotifyNotification = record
     parent_object : TGObject;
     priv          : PNotifyNotificationPrivate;
   end;
 
+  PNotifyNotification = P_NotifyNotification;
+  NotifyNotification  = _NotifyNotification;
+
+  NotificationProc = procedure (Notification : PNotifyNotification);
+
+  P_NotifyNotificationClass = ^_NotifyNotificationClass;
+  _NotifyNotificationClass  = record
+    parent_class : TGObjectClass;
+    // Signals
+    Notification : NotificationProc;
+  end;
+
+  PNotifyNotificationClass = P_NotifyNotificationClass;
+  NotifyNotificationClass  = _NotifyNotificationClass;
+
+function  notify_notification_get_type : GType; cdecl; external NOTIFY_LIBRARY;
+
+function notify_type_notification : GType;
 
 (*
 
-#define NOTIFY_TYPE_NOTIFICATION         (notify_notification_get_type ())
 #define NOTIFY_NOTIFICATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotification))
 #define NOTIFY_NOTIFICATION_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
 #define NOTIFY_IS_NOTIFICATION(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), NOTIFY_TYPE_NOTIFICATION))
 #define NOTIFY_IS_NOTIFICATION_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), NOTIFY_TYPE_NOTIFICATION))
 #define NOTIFY_NOTIFICATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
-
-typedef struct _NotifyNotification NotifyNotification;
-typedef struct _NotifyNotificationClass NotifyNotificationClass;
-typedef struct _NotifyNotificationPrivate NotifyNotificationPrivate;
-
-
-
-struct _NotifyNotificationClass
-{
-        GObjectClass    parent_class;
-
-        /* Signals */
-        void            ( *closed) (NotifyNotification *notification);
-};
 
 
 /**
@@ -117,8 +121,6 @@ typedef void    ( *NotifyActionCallback) (NotifyNotification *notification,
  * is much like G_CALLBACK().
  */
 #define NOTIFY_ACTION_CALLBACK(func) ((NotifyActionCallback)(func))
-
-GType               notify_notification_get_type             (void);
 
 NotifyNotification *notify_notification_new                  (const char         *summary,
                                                               const char         *body,
@@ -194,6 +196,11 @@ gint                notify_notification_get_closed_reason     (const NotifyNotif
 
 *)
 implementation
+
+function notify_type_notification : GType;
+begin
+  Result := notify_notification_get_type;
+end;
 
 end.
 
