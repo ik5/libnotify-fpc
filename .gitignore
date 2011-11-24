@@ -1,4 +1,4 @@
 src/backup/*
 src/lib/*
-src/*/*bak
+src/*bak
 tests/*
