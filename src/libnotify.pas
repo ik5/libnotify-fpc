@@ -45,45 +45,43 @@ const
  NOTIFY_EXPIRES_NEVER   = 0;
 
 type
-  P_NotifyNotificationPrivate = ^_NotifyNotificationPrivate;
-  _NotifyNotificationPrivate  = record end;
+  P_NotifyNotificationPrivate = ^T_NotifyNotificationPrivate;
+  T_NotifyNotificationPrivate = record end;
 
   PNotifyNotificationPrivate = P_NotifyNotificationPrivate;
-  NotifyNotificationPrivate  = _NotifyNotificationPrivate;
+  NotifyNotificationPrivate  = T_NotifyNotificationPrivate;
 
-  P_NotifyNotification = ^_NotifyNotification;
-  _NotifyNotification = record
+  P_NotifyNotification = ^T_NotifyNotification;
+  T_NotifyNotification = record
     parent_object : TGObject;
     priv          : PNotifyNotificationPrivate;
   end;
 
   PNotifyNotification = P_NotifyNotification;
-  NotifyNotification  = _NotifyNotification;
+  TNotifyNotification = T_NotifyNotification;
 
-  NotificationProc = procedure (Notification : PNotifyNotification);
+  TNotificationProc = procedure (Notification : PNotifyNotification);
 
-  P_NotifyNotificationClass = ^_NotifyNotificationClass;
-  _NotifyNotificationClass  = record
+  P_NotifyNotificationClass = ^T_NotifyNotificationClass;
+  T_NotifyNotificationClass = record
     parent_class : TGObjectClass;
     // Signals
-    Notification : NotificationProc;
+    Notification : TNotificationProc;
   end;
 
   PNotifyNotificationClass = P_NotifyNotificationClass;
-  NotifyNotificationClass  = _NotifyNotificationClass;
+  TNotifyNotificationClass = T_NotifyNotificationClass;
 
 function  notify_notification_get_type : GType; cdecl; external NOTIFY_LIBRARY;
 
-function notify_type_notification : GType;
+function m_notify_type_notification : GType; cdecl; inline;
+function M_NOTIFY_NOTIFICATION(o : pointer) : PGTypeInstance; cdecl; inline;
+function M_NOTIFY_NOTIFICATION_CLASS(k : Pointer) : Pointer; cdecl; inline;
+function M_NOTIFY_IS_NOTIFICATION(o : Pointer) : Boolean; cdecl; inline;
+function M_NOTIFY_IS_NOTIFICATION_CLASS(k : pointer) : Boolean; cdecl; inline;
+function M_NOTIFY_NOTIFICATION_GET_CLASS(o : Pointer) : PGTypeClass; cdecl; inline;
 
 (*
-
-#define NOTIFY_NOTIFICATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotification))
-#define NOTIFY_NOTIFICATION_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
-#define NOTIFY_IS_NOTIFICATION(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), NOTIFY_TYPE_NOTIFICATION))
-#define NOTIFY_IS_NOTIFICATION_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), NOTIFY_TYPE_NOTIFICATION))
-#define NOTIFY_NOTIFICATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
-
 
 /**
  * NotifyUrgency:
@@ -197,9 +195,39 @@ gint                notify_notification_get_closed_reason     (const NotifyNotif
 *)
 implementation
 
-function notify_type_notification : GType;
+function m_notify_type_notification : GType; cdecl;
 begin
-  Result := notify_notification_get_type;
+  m_notify_type_notification := notify_notification_get_type;
+end;
+
+function M_NOTIFY_NOTIFICATION(o : pointer): PGTypeInstance; cdecl;
+begin
+//  #define NOTIFY_NOTIFICATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotification))
+  M_NOTIFY_NOTIFICATION := G_TYPE_CHECK_INSTANCE_CAST(o, m_notify_type_notification);
+end;
+
+function M_NOTIFY_NOTIFICATION_CLASS(k: Pointer): Pointer; cdecl;
+begin
+ //#define NOTIFY_NOTIFICATION_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
+ M_NOTIFY_NOTIFICATION_CLASS := G_TYPE_CHECK_CLASS_CAST(k, m_notify_type_notification);
+end;
+
+function M_NOTIFY_IS_NOTIFICATION(o: Pointer): Boolean; cdecl;
+begin
+  // #define NOTIFY_IS_NOTIFICATION(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), NOTIFY_TYPE_NOTIFICATION))
+  M_NOTIFY_IS_NOTIFICATION := G_TYPE_CHECK_INSTANCE_TYPE(o, m_notify_type_notification);
+end;
+
+function M_NOTIFY_IS_NOTIFICATION_CLASS(k: pointer): Boolean; cdecl;
+begin
+  // #define NOTIFY_IS_NOTIFICATION_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), NOTIFY_TYPE_NOTIFICATION))
+  M_NOTIFY_IS_NOTIFICATION_CLASS := G_TYPE_CHECK_CLASS_TYPE(k, m_notify_type_notification);
+end;
+
+function M_NOTIFY_NOTIFICATION_GET_CLASS(o: Pointer): PGTypeClass; cdecl;
+begin
+  // #define NOTIFY_NOTIFICATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
+  M_NOTIFY_NOTIFICATION_GET_CLASS := G_TYPE_INSTANCE_GET_CLASS(o, m_notify_type_notification);
 end;
 
 end.
