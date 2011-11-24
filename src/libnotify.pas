@@ -28,22 +28,36 @@ const
   NOTIFY_LIBRARY = 'libnotify.so';
 
 { notification.h }
-(*
-
-/**
+const
+ (**
  * NOTIFY_EXPIRES_DEFAULT:
  *
  * The default expiration time on a notification.
- */
-#define NOTIFY_EXPIRES_DEFAULT -1
+ *)
+ NOTIFY_EXPIRES_DEFAULT = -1;
 
-/**
+ (**
  * NOTIFY_EXPIRES_NEVER:
  *
  * The notification never expires. It stays open until closed by the calling API
  * or the user.
- */
-#define NOTIFY_EXPIRES_NEVER    0
+ *)
+ NOTIFY_EXPIRES_NEVER   = 0;
+
+type
+  P_NotifyNotificationPrivate = ^_NotifyNotificationPrivate;
+  _NotifyNotificationPrivate  = record end;
+
+  PNotifyNotificationPrivate = P_NotifyNotificationPrivate;
+  NotifyNotificationPrivate  = _NotifyNotificationPrivate;
+
+  _NotifyNotification = record
+    parent_object : TGObject;
+    priv          : PNotifyNotificationPrivate;
+  end;
+
+
+(*
 
 #define NOTIFY_TYPE_NOTIFICATION         (notify_notification_get_type ())
 #define NOTIFY_NOTIFICATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotification))
@@ -56,13 +70,7 @@ typedef struct _NotifyNotification NotifyNotification;
 typedef struct _NotifyNotificationClass NotifyNotificationClass;
 typedef struct _NotifyNotificationPrivate NotifyNotificationPrivate;
 
-struct _NotifyNotification
-{
-        /*< private >*/
-        GObject                    parent_object;
 
-        NotifyNotificationPrivate *priv;
-};
 
 struct _NotifyNotificationClass
 {
