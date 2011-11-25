@@ -81,23 +81,23 @@ function M_NOTIFY_IS_NOTIFICATION(o : Pointer) : Boolean; cdecl; inline;
 function M_NOTIFY_IS_NOTIFICATION_CLASS(k : pointer) : Boolean; cdecl; inline;
 function M_NOTIFY_NOTIFICATION_GET_CLASS(o : Pointer) : PGTypeClass; cdecl; inline;
 
-(*
-
-/**
+const
+ (**
  * NotifyUrgency:
  * @NOTIFY_URGENCY_LOW: Low urgency. Used for unimportant notifications.
  * @NOTIFY_URGENCY_NORMAL: Normal urgency. Used for most standard notifications.
  * @NOTIFY_URGENCY_CRITICAL: Critical urgency. Used for very important notifications.
  *
  * The urgency level of the notification.
- */
-typedef enum
-{
-        NOTIFY_URGENCY_LOW,
-        NOTIFY_URGENCY_NORMAL,
-        NOTIFY_URGENCY_CRITICAL,
+ *)
+ NOTIFY_URGENCY_LOW      = 0;
+ NOTIFY_URGENCY_NORMAL   = 1;
+ NOTIFY_URGENCY_CRITICAL = 2;
 
-} NotifyUrgency;
+type
+  NotifyUrgency = cint;
+
+(*
 
 /**
  * NotifyActionCallback:
