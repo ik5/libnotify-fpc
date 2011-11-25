@@ -27,6 +27,11 @@ uses ctypes, glib2, gdk2pixbuf;
 const
   NOTIFY_LIBRARY = 'libnotify.so';
 
+// Should be part of GTK but it is not binded to FPC :(
+type
+ GVariant  = record end;
+ GfreeFunc = procedure(data : gpointer); cdecl;
+
 { notification.h }
 const
  (**
@@ -172,41 +177,49 @@ procedure notify_notification_set_hint_string(notification : PNotifyNotification
                                      constref value        : PChar);
  cdecl; external NOTIFY_LIBRARY;
 
+procedure notify_notification_set_hint_byte(notification : PNotifyNotification;
+                                   constref key          : PChar;
+                                            value        : guchar);
+ cdecl; external NOTIFY_LIBRARY;
 
+procedure notify_notification_set_hint_byte_array(
+                                             notification : PNotifyNotification;
+                                    constref key          : PChar;
+                                    constref value        : Pguchar;
+                                             len          : gsize);
+ cdecl; external NOTIFY_LIBRARY;
 
-(*
-void                notify_notification_set_hint_byte         (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               guchar              value);
+procedure notify_notification_set_hint(notification : PNotifyNotification;
+                              constref key          : PChar;
+                                       value        : GVariant);
+ cdecl; external NOTIFY_LIBRARY;
 
-void                notify_notification_set_hint_byte_array   (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               const guchar       *value,
-                                                               gsize               len);
+procedure notify_notification_set_app_name(notification : PNotifyNotification;
+                                  constref app_name     : PChar);
+ cdecl; external NOTIFY_LIBRARY;
 
-void                notify_notification_set_hint              (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               GVariant           *value);
+procedure notify_notification_clear_hints(notification : PNotifyNotification);
+  cdecl; external NOTIFY_LIBRARY;
 
-void                notify_notification_set_app_name          (NotifyNotification *notification,
-                                                               const char         *app_name);
+procedure notify_notification_add_action(notification : PNotifyNotification;
+                                constref action,
+                                         label_       : PChar;
+                                         callback     : NotifyActionCallback;
+                                         user_data    : gpointer;
+                                         free_funch   : GFreeFunc);
+ cdecl; external NOTIFY_LIBRARY;
 
-void                notify_notification_clear_hints           (NotifyNotification *notification);
+procedure notify_notification_clear_actions(notification : PNotifyNotification);
+  cdecl; external NOTIFY_LIBRARY;
 
-void                notify_notification_add_action            (NotifyNotification *notification,
-                                                               const char         *action,
-                                                               const char         *label,
-                                                               NotifyActionCallback callback,
-                                                               gpointer            user_data,
-                                                               GFreeFunc           free_func);
+function notify_notification_close(notification : PNotifyNotification;
+                                   error        : PPGError)            : gboolean;
+cdecl; external NOTIFY_LIBRARY;
 
-void                notify_notification_clear_actions         (NotifyNotification *notification);
-gboolean            notify_notification_close                 (NotifyNotification *notification,
-                                                               GError            **error);
+function notify_notification_get_closed_reason(
+                                     notification : PNotifyNotification) : gint;
+  cdecl; external NOTIFY_LIBRARY;
 
-gint                notify_notification_get_closed_reason     (const NotifyNotification *notification);
-
-*)
 implementation
 
 function m_notify_type_notification : GType; cdecl;
