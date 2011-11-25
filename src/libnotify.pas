@@ -227,6 +227,18 @@ function notify_urgency_get_type : GType;
 
 function M_NOTIFY_TYPE_URGENCY : GType; cdecl; inline;
 
+{ notify-features.h }
+(* compile time version *)
+const
+  NOTIFY_VERSION_MAJOR = 0;
+  NOTIFY_VERSION_MINOR = 7;
+  NOTIFY_VERSION_MICRO = 3;
+
+(* check whether a version equal to or greater than
+ * major.minor.micro is present.
+ *)
+function M_NOTIFY_CHECK_VERSION(major, minor, micro : cint) : Boolean; cdecl; inline;
+
 implementation
 
 function m_notify_type_notification : GType; cdecl;
@@ -267,6 +279,23 @@ end;
 function M_NOTIFY_TYPE_URGENCY: GType; cdecl;
 begin
   M_NOTIFY_TYPE_URGENCY := notify_urgency_get_type;
+end;
+
+function M_NOTIFY_CHECK_VERSION(major, minor, micro: cint): Boolean; cdecl;
+begin
+  {
+  #define NOTIFY_CHECK_VERSION(major,minor,micro) \
+    (NOTIFY_VERSION_MAJOR > (major) || \
+     (NOTIFY_VERSION_MAJOR == (major) && NOTIFY_VERSION_MINOR > (minor)) || \
+     (NOTIFY_VERSION_MAJOR == (major) && NOTIFY_VERSION_MINOR == (minor) && \
+      NOTIFY_VERSION_MICRO >= (micro)))
+  }
+  M_NOTIFY_CHECK_VERSION := ((NOTIFY_VERSION_MAJOR  >  major)  or
+                             ((NOTIFY_VERSION_MAJOR  = major)  and
+                              (NOTIFY_VERSION_MINOR >  minor)) or
+                             ((NOTIFY_VERSION_MAJOR  = major)  and
+                              (NOTIFY_VERSION_MINOR  = minor)  and
+                              (NOTIFY_VERSION_MICRO >= micro)));
 end;
 
 end.
