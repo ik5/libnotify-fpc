@@ -60,7 +60,7 @@ type
   PNotifyNotification = P_NotifyNotification;
   TNotifyNotification = T_NotifyNotification;
 
-  TNotificationProc = procedure (Notification : PNotifyNotification);
+  TNotificationProc = procedure (Notification : PNotifyNotification); cdecl;
 
   P_NotifyNotificationClass = ^T_NotifyNotificationClass;
   T_NotifyNotificationClass = record
@@ -97,20 +97,18 @@ const
 type
   NotifyUrgency = cint;
 
-(*
-
-/**
+ (**
  * NotifyActionCallback:
  * @notification:
  * @action:
  * @user_data:
  *
  * An action callback function.
- */
-typedef void    ( *NotifyActionCallback) (NotifyNotification *notification,
-                                         char               *action,
-                                         gpointer            user_data);
-
+ *)
+ NotifyActionCallback = procedure(notification : PNotifyNotification;
+                                  action       : PChar;
+                                  user_data    : gpointer); cdecl;
+(*
 /**
  * NOTIFY_ACTION_CALLBACK:
  * @func: The function to cast.
@@ -119,10 +117,11 @@ typedef void    ( *NotifyActionCallback) (NotifyNotification *notification,
  * is much like G_CALLBACK().
  */
 #define NOTIFY_ACTION_CALLBACK(func) ((NotifyActionCallback)(func))
+*)
 
-NotifyNotification *notify_notification_new                  (const char         *summary,
-                                                              const char         *body,
-                                                              const char         *icon);
+function notify_notification_new(constref summary, body, icon : PChar) : PNotifyNotification;
+ cdecl; external NOTIFY_LIBRARY;
+
 
 gboolean            notify_notification_update                (NotifyNotification *notification,
                                                                const char         *summary,
