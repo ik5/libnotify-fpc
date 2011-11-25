@@ -214,11 +214,18 @@ procedure notify_notification_clear_actions(notification : PNotifyNotification);
 
 function notify_notification_close(notification : PNotifyNotification;
                                    error        : PPGError)            : gboolean;
-cdecl; external NOTIFY_LIBRARY;
+ cdecl; external NOTIFY_LIBRARY;
 
 function notify_notification_get_closed_reason(
                                      notification : PNotifyNotification) : gint;
-  cdecl; external NOTIFY_LIBRARY;
+ cdecl; external NOTIFY_LIBRARY;
+
+{ notify-enum-types.h }
+(* enumerations from "notification.h" *)
+function notify_urgency_get_type : GType;
+ cdecl; external NOTIFY_LIBRARY;
+
+function M_NOTIFY_TYPE_URGENCY : GType; cdecl; inline;
 
 implementation
 
@@ -255,6 +262,11 @@ function M_NOTIFY_NOTIFICATION_GET_CLASS(o: Pointer): PGTypeClass; cdecl;
 begin
   // #define NOTIFY_NOTIFICATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), NOTIFY_TYPE_NOTIFICATION, NotifyNotificationClass))
   M_NOTIFY_NOTIFICATION_GET_CLASS := G_TYPE_INSTANCE_GET_CLASS(o, m_notify_type_notification);
+end;
+
+function M_NOTIFY_TYPE_URGENCY: GType; cdecl;
+begin
+  M_NOTIFY_TYPE_URGENCY := notify_urgency_get_type;
 end;
 
 end.
