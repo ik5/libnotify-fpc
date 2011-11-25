@@ -126,41 +126,55 @@ function notify_notification_update(notification : PNotifyNotification;
                                     constref summary, body, icon : PChar) : gboolean;
  cdecl; external NOTIFY_LIBRARY;
 
+function notify_notification_show(notification : PNotifyNotification;
+                                  error        : PPGError)             : gboolean;
+  cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_timeout(notification : PNotifyNotification;
+                                          timeout      : gint);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_category(notification : PNotifyNotification;
+                                  constref category     : PChar);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_urgency(notification : PNotifyNotification;
+                                          urgency      : NotifyUrgency);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_icon_from_pixbuf(
+                                        notification : PNotifyNotification;
+                                        icon         : PGdkPixbuf);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_image_from_pixbuf(
+                                        notification : PNotifyNotification;
+                                        pixbuf       : PGdkPixbuf);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_hint_int32(notification : PNotifyNotification;
+                                    constref key          : PChar;
+                                             value        : gint);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_hint_uint32(notification : PNotifyNotification;
+                                     constref key          : PChar;
+                                              value        : guint);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_hint_double(notification : PNotifyNotification;
+                                     constref key          : PChar;
+                                              value        : gdouble);
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_notification_set_hint_string(notification : PNotifyNotification;
+                                     constref key          : PChar;
+                                     constref value        : PChar);
+ cdecl; external NOTIFY_LIBRARY;
+
+
 
 (*
-
-gboolean            notify_notification_show                  (NotifyNotification *notification,
-                                                               GError            **error);
-
-void                notify_notification_set_timeout           (NotifyNotification *notification,
-                                                               gint                timeout);
-
-void                notify_notification_set_category          (NotifyNotification *notification,
-                                                               const char         *category);
-
-void                notify_notification_set_urgency           (NotifyNotification *notification,
-                                                               NotifyUrgency       urgency);
-
-void                notify_notification_set_icon_from_pixbuf  (NotifyNotification *notification,
-                                                               GdkPixbuf          *icon);
-void                notify_notification_set_image_from_pixbuf (NotifyNotification *notification,
-                                                               GdkPixbuf          *pixbuf);
-
-void                notify_notification_set_hint_int32        (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               gint                value);
-void                notify_notification_set_hint_uint32       (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               guint               value);
-
-void                notify_notification_set_hint_double       (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               gdouble             value);
-
-void                notify_notification_set_hint_string       (NotifyNotification *notification,
-                                                               const char         *key,
-                                                               const char         *value);
-
 void                notify_notification_set_hint_byte         (NotifyNotification *notification,
                                                                const char         *key,
                                                                guchar              value);
