@@ -239,6 +239,19 @@ const
  *)
 function M_NOTIFY_CHECK_VERSION(major, minor, micro : cint) : Boolean; cdecl; inline;
 
+{ notify.h }
+
+function notify_init(constref app_name : PChar) : gboolean;
+ cdecl; external NOTIFY_LIBRARY;
+
+procedure notify_uninit; cdecl; external NOTIFY_LIBRARY;
+function notify_is_initted : gboolean; cdecl; external NOTIFY_LIBRARY;
+function notify_get_app_name : PChar; cdecl; external NOTIFY_LIBRARY;
+procedure notify_set_app_name(constref app_name : PChar); cdecl; external NOTIFY_LIBRARY;
+function notify_get_server_caps : PGList; cdecl; external NOTIFY_LIBRARY;
+function notify_get_server_info(ret_name, ret_vendor, ret_version : PPChar) : gboolean;
+ cdecl; external NOTIFY_LIBRARY;
+
 implementation
 
 function m_notify_type_notification : GType; cdecl;
