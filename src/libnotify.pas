@@ -122,11 +122,12 @@ type
 function notify_notification_new(constref summary, body, icon : PChar) : PNotifyNotification;
  cdecl; external NOTIFY_LIBRARY;
 
+function notify_notification_update(notification : PNotifyNotification;
+                                    constref summary, body, icon : PChar) : gboolean;
+ cdecl; external NOTIFY_LIBRARY;
 
-gboolean            notify_notification_update                (NotifyNotification *notification,
-                                                               const char         *summary,
-                                                               const char         *body,
-                                                               const char         *icon);
+
+(*
 
 gboolean            notify_notification_show                  (NotifyNotification *notification,
                                                                GError            **error);
