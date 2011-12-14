@@ -20,7 +20,7 @@ program test_notify;
 {$mode fpc}
 
 uses
-  libnotify, gtk2;
+  libnotify;
 
 var
   hello : PNotifyNotification;
