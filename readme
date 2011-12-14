@@ -1,0 +1,44 @@
+The following library is a Pascal binding for libnotify 
+(http://developer.gnome.org/libnotify/).
+
+The following implementation is of version 0.7.3 .
+
+The library and the examples arrive with LGPL 2 and/or above license.
+
+
+The library allow to send messages to d-bus with customizing of the message.
+We can place icons and other utilities called "hints".
+
+You can find documentation at: 
+  http://developer.gnome.org/libnotify/0.7/ch01.html
+
+There is a simple example on how to use the library under the tests library 
+called test_notify.lpr and it's code is as follows:
+
+program test_notify;
+{$mode fpc}
+
+uses
+  libnotify;
+
+var
+  hello : PNotifyNotification;
+
+begin
+  // Unique name for the notification, this app name :)
+  notify_init(argv[0]);
+
+  hello := notify_notification_new (
+             // Title
+             'Example for libnotify',
+             // Content
+             'This is a simple example how to use libnotify.',
+             // Icon
+             'dialog-information');
+  // Lets display it, but we will not handle any errors ...
+  notify_notification_show (hello, nil);
+  // That's all folks :)
+  notify_uninit;
+end. 
+
+
