@@ -41,4 +41,3 @@ begin
   // That's all folks :)
   notify_uninit;
 end.
-
