@@ -17,7 +17,6 @@
   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 }
 program test_notify;
-{.$codepage UTF8}
 {$mode fpc}
 
 uses
@@ -27,7 +26,6 @@ var
   hello : PNotifyNotification;
 
 begin
-  gtk_init(@argc, @argv);
   // Unique name for the notification, this app name :)
   notify_init(argv[0]);
 
