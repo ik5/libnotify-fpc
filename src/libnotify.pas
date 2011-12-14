@@ -124,11 +124,11 @@ type
 #define NOTIFY_ACTION_CALLBACK(func) ((NotifyActionCallback)(func))
 *)
 
-function notify_notification_new(constref summary, body, icon : PChar) : PNotifyNotification;
+function notify_notification_new(summary, body, icon : PChar) : PNotifyNotification;
  cdecl; external NOTIFY_LIBRARY;
 
 function notify_notification_update(notification : PNotifyNotification;
-                                    constref summary, body, icon : PChar) : gboolean;
+                                    summary, body, icon : PChar) : gboolean;
  cdecl; external NOTIFY_LIBRARY;
 
 function notify_notification_show(notification : PNotifyNotification;
@@ -140,7 +140,7 @@ procedure notify_notification_set_timeout(notification : PNotifyNotification;
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_category(notification : PNotifyNotification;
-                                  constref category     : PChar);
+                                           category     : PChar);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_urgency(notification : PNotifyNotification;
@@ -158,51 +158,51 @@ procedure notify_notification_set_image_from_pixbuf(
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint_int32(notification : PNotifyNotification;
-                                    constref key          : PChar;
+                                             key          : PChar;
                                              value        : gint);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint_uint32(notification : PNotifyNotification;
-                                     constref key          : PChar;
+                                              key          : PChar;
                                               value        : guint);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint_double(notification : PNotifyNotification;
-                                     constref key          : PChar;
+                                              key          : PChar;
                                               value        : gdouble);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint_string(notification : PNotifyNotification;
-                                     constref key          : PChar;
-                                     constref value        : PChar);
+                                              key          : PChar;
+                                              value        : PChar);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint_byte(notification : PNotifyNotification;
-                                   constref key          : PChar;
+                                            key          : PChar;
                                             value        : guchar);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint_byte_array(
                                              notification : PNotifyNotification;
-                                    constref key          : PChar;
-                                    constref value        : Pguchar;
+                                             key          : PChar;
+                                             value        : Pguchar;
                                              len          : gsize);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_hint(notification : PNotifyNotification;
-                              constref key          : PChar;
+                                       key          : PChar;
                                        value        : GVariant);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_set_app_name(notification : PNotifyNotification;
-                                  constref app_name     : PChar);
+                                           app_name     : PChar);
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_clear_hints(notification : PNotifyNotification);
   cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_notification_add_action(notification : PNotifyNotification;
-                                constref action,
+                                         action,
                                          label_       : PChar;
                                          callback     : NotifyActionCallback;
                                          user_data    : gpointer;
@@ -241,13 +241,13 @@ function M_NOTIFY_CHECK_VERSION(major, minor, micro : cint) : Boolean; cdecl; in
 
 { notify.h }
 
-function notify_init(constref app_name : PChar) : gboolean;
+function notify_init(app_name : PChar) : gboolean;
  cdecl; external NOTIFY_LIBRARY;
 
 procedure notify_uninit; cdecl; external NOTIFY_LIBRARY;
 function notify_is_initted : gboolean; cdecl; external NOTIFY_LIBRARY;
 function notify_get_app_name : PChar; cdecl; external NOTIFY_LIBRARY;
-procedure notify_set_app_name(constref app_name : PChar); cdecl; external NOTIFY_LIBRARY;
+procedure notify_set_app_name(app_name : PChar); cdecl; external NOTIFY_LIBRARY;
 function notify_get_server_caps : PGList; cdecl; external NOTIFY_LIBRARY;
 function notify_get_server_info(ret_name, ret_vendor, ret_version : PPChar) : gboolean;
  cdecl; external NOTIFY_LIBRARY;
