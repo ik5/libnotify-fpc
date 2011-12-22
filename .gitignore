@@ -3,3 +3,4 @@ src/lib/*
 src/*bak
 tests/*
 libnotify/*
+packages/lib/*
