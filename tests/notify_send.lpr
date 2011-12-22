@@ -33,6 +33,16 @@ var
   tmpi : Int64;
   tmps : string;
 begin
+  // Default values prior for any handler ...
+  FUrgency := NOTIFY_URGENCY_NORMAL;
+
+  if HasOption('?', 'help') then
+    begin
+      WriteHelp;
+      Terminate;
+      exit;
+    end;
+
   if HasOption('u','urgency') then
     begin
       tmps     := GetOptionValue('u','urgency');
@@ -43,17 +53,9 @@ begin
       else
         FUrgency := NOTIFY_URGENCY_NORMAL;
       end;
-    end
-  else begin
-        FUrgency := NOTIFY_URGENCY_NORMAL;
-       end;
-
-  if HasOption('?', 'help') then
-    begin
-      WriteHelp;
-      Terminate;
-      exit;
     end;
+
+
 
   Terminate;
 end;
@@ -68,6 +70,8 @@ begin
   writeln(#9, 'Show help options');
   writeln;
   writeln('Application Options:');
+  writeln('  ', '-b, --body=<body>');
+  writeln(#9, 'Sepcifies the body of the notification');
   writeln('  ', '-u, --urgency=LEVEL');
   writeln(#9, 'Specifies the urgency level (low, normal, critical).'); writeln;
   writeln('  ', '-t, --expire-time=TIME');
