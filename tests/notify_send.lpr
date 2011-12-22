@@ -6,7 +6,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  CustApp, Classes, SysUtils, LCLProc, libnotify;
+  CustApp, Classes, SysUtils, LCLProc, libnotify
   { you can add units after this };
 
 type
