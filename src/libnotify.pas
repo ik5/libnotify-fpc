@@ -25,7 +25,7 @@ interface
 uses ctypes, glib2, gdk2pixbuf;
 
 const
-  NOTIFY_LIBRARY = 'libnotify.so';
+  NOTIFY_LIBRARY = 'libnotify';
 
 // Should be part of GTK but it is not binded to FPC :(
 type
