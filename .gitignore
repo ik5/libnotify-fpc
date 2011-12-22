@@ -2,3 +2,4 @@ src/backup/*
 src/lib/*
 src/*bak
 tests/*
+libnotify/*
