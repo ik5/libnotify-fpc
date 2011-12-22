@@ -4,4 +4,4 @@ src/*bak
 tests/*
 libnotify/*
 packages/lib/*
-packages/libnotify.pas
+packages/libnotify_pkg.pas
