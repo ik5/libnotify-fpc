@@ -31,18 +31,23 @@ var
 procedure TApplication.DoRun;
 var
   tmpi : Int64;
+  tmps : string;
 begin
-{  if HasOption('u','urgency') then
+  if HasOption('u','urgency') then
     begin
-      FUrgency := NOTIFY_URGENCY_NORMAL;
-      if TryStrToInt64(GetOptionValue('u','urgency'), tmpi) then
-        if (tmpi in [NOTIFY_URGENCY_LOW..NOTIFY_URGENCY_CRITICAL]) then
-           FUrgency := tmpi;
+      tmps     := GetOptionValue('u','urgency');
+      case UpperCase(tmps) of
+        'low'      : FUrgency := NOTIFY_URGENCY_LOW;
+        'normal'   : FUrgency := NOTIFY_URGENCY_NORMAL;
+        'critical' : FUrgency := NOTIFY_URGENCY_CRITICAL;
+      else
+        FUrgency := NOTIFY_URGENCY_NORMAL;
+      end;
     end
   else begin
         FUrgency := NOTIFY_URGENCY_NORMAL;
        end;
-}
+
   if HasOption('?', 'help') then
     begin
       WriteHelp;
