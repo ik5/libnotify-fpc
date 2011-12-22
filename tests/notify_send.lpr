@@ -55,20 +55,26 @@ end;
 
 procedure TApplication.WriteHelp;
 begin
-  writeln;
   Writeln('Usage: ');
-  writeln(#9,App.ExeName, '[OPTION...] <SUMMARY> [BODY] - create a notification');
+  writeln('  ', ExtractFileName(App.ExeName), '[OPTION...] <SUMMARY> [BODY] - create a notification');
   writeln;
   writeln('Help Options:');
-  writeln(#9, '-?, --help',#9, '  Show help options');
+  writeln('  ', '-?, --help');
+  writeln(#9, 'Show help options');
   writeln;
   writeln('Application Options:');
-  writeln(#9, '-u, --urgency=LEVEL', #9, 'Specifies the urgency level (low, normal, critical).');
-  writeln(#9, '-t, --expire-time=TIME', #9, 'Specifies the timeout in milliseconds at which to expire the notification.');
-  writeln(#9, '-i, --icon=ICON[,ICON...]', #9, 'Specifies an icon filename or stock icon to display.');
-  writeln(#9, '-c, --category=TYPE[,TYPE...]', #9, 'Specifies the notification category.');
-  writeln(#9, '-h, --hint=TYPE:NAME:VALUE', #9, 'pecifies basic extra data to pass. Valid types are int, double, string and byte.');
-  writeln(#9, '-v, --version', #9, 'Version of the package.');
+  writeln('  ', '-u, --urgency=LEVEL');
+  writeln(#9, 'Specifies the urgency level (low, normal, critical).'); writeln;
+  writeln('  ', '-t, --expire-time=TIME');
+  writeln(#9, 'Specifies the timeout in milliseconds at which to expire the notification.'); writeln;
+  writeln('  ', '-i, --icon=ICON[,ICON...]');
+  writeln(#9, 'Specifies an icon filename or stock icon to display.'); writeln;
+  writeln('  ', '-c, --category=TYPE[,TYPE...]');
+  writeln(#9, 'Specifies the notification category.'); writeln;
+  writeln('  ', '-h, --hint=TYPE:NAME:VALUE');
+  writeln(#9, 'pecifies basic extra data to pass. Valid types are int, double, string and byte.'); writeln;
+  writeln('  ', '-v, --version');
+  writeln(#9, 'Version of the package.');
   writeln;
 end;
 
